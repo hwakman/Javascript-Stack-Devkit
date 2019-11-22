@@ -1,40 +1,36 @@
 ## Javascript Stack Dev_kit
 
-### Installation
+### Project Installation
 
-Docker Installation (https://docs.docker.com/v17.12/install/)
+Docker Installation [docs.docker.com/v17.12/install/](https://docs.docker.com/v17.12/install/)
 
 ```
-$ docker-compose up -d --build
+$ docker-compose up -d --build 			/ ### Start Server ### /
 ```
 
 ### Environment Location
 
-| Environment | Location |
-| ------ | ------ |
-| Client | (http://172.166.0.7/) |
-| Server | (http://172.166.0.6:8080) |
-| Database | (http://172.166.0.5:5432) |
+| NO.| Environment | Location | Document |
+| ------ | ------ | ------ | ------ |
+| 1 | Client | [172.166.0.7](http://172.166.0.7/) | https://nextjs.org/ |
+| 2 | Server | [172.166.0.6:8080](http://172.166.0.6:8080) | https://expressjs.com/ |
+| 3 | Database | [172.166.0.5:5432](http://172.166.0.5:5432) | https://www.postgresql.org/ |
+| 4 | Docker compose | - | https://docs.docker.com/compose/ |
 
 ### Database
 
-| Title | Details |
-| ------ | ------ |
-| Host | 172.166.0.5 |
-| PORT | 5432 |
-| USER | postgres |
-| PASSWORD | 1234 |
-| DATABASE | postgres |
+```
+Database : postgres
+Username : postgres 
+Password : 1234 
+Host : 172.166.0.5 
+Port : 5432 
+```
 
 ### Debug
 
-```
-- Client
-$ docker-compose up --build client
-
-- Server
-$ docker-compose up --build server
-
-- Database
-$ docker-compose up --build db
-```
+| Environment | Command  |
+| ------------ | ------------ |
+| Client | `$ docker-compose up --build client` |
+| Server | `$ docker-compose up --build server` |
+| Database | `$ docker-compose up --build db` |
