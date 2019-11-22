@@ -1,0 +1,74 @@
+version: '3'
+
+services:
+  
+  # container for postgresql database
+  db:
+    image: postgres
+    restart: always
+    networks: 
+      progect_net:
+        ipv4_address: 172.166.0.5
+    volumes: 
+      - ./migration:/docker-entrypoint-initdb.d
+      - db_data:/var/lib/postgres/data
+    env_file: 
+      - docker_.env
+    healthcheck:
+      test: curl -f https://172.166.0.5:5432 || exit 1
+      interval: 1m30s
+      timeout: 5s
+      retries: 5
+
+  # container for Express js
+  server:
+    image: node:10
+    restart: always
+    networks: 
+      progect_net:
+        ipv4_address: 172.166.0.6
+    working_dir: /server
+    volumes: 
+      - ./server:/server
+    env_file: 
+      - docker_.env
+    environment: 
+      DB_HOST: db
+    depends_on: 
+      - db
+    command: npm start
+    healthcheck:
+      test: curl -f http://172.166.0.6:8080/ || exit 1
+      interval: 1m30s
+      timeout: 5s
+      retries: 5
+
+  # container for React js
+  client:
+    image: node:10
+    restart: always
+    networks: 
+      progect_net:
+        ipv4_address: 172.166.0.7
+    working_dir: /client
+    volumes: 
+      - ./client:/client
+    env_file: 
+      - docker_.env
+    environment: 
+      API_PORT: http://172.166.0.6:8080/
+      DEV_PORT: http://172.166.0.7/
+    depends_on: 
+      - server
+    command: npm start
+
+# network config
+networks: 
+  progect_net:
+    ipam: 
+      config: 
+        - subnet: 172.166.0.0/16
+
+# container data config
+volumes: 
+  db_data:
